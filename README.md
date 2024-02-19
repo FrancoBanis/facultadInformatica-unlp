@@ -1,2 +1,2 @@
-# facultad informatica UNLP.
+# Facultad Informatica UNLP.
 Repositorio destinado a practicas recibidas por las diferentes catedras de la facultad de informatica.
