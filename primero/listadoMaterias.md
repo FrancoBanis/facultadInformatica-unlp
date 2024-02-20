@@ -13,7 +13,7 @@
     flowchart TD
     subgraph Primer Año
     subgraph Primer Semestre   
-        A[Conceptos de Algoritmos, Datos y Programas]
+        A[CADP]
         B[Organización de Computadoras]
         C[Matemática 1]
     end
