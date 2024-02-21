@@ -32,8 +32,9 @@
     A2 --> C3[/Recibo DNI del nodo/]
     B2 & C3 --> D3{Son el mismo?}
     D3 -.->|Si|E3[Borro el dni de la lista]
-    E3 ---> E1
+    E3 ---> J21([FIN])
     D3 -.->|No|C3
+    J21 -->  E1
     end
     subgraph Punto B
     J1([INICIO]) --> J2[Recibo Vector de genero de actuacion]
