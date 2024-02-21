@@ -42,7 +42,9 @@
     J4 -.->|Si| J5[Remplazo max por VectorPos]
     J4-.->|No| J6{VectorPos > max2}
     J6-.->|Si| J7[Remplazo max2 por VectorPos]
-    J6 -->|No| J8[\Informo los dos maximos/]
+    J7 -.->|No| J10{¿Termine de recorrer?}
+    J10 -.->|Si|J8[\Informo max1 y max2/]
+    J10 -.->|No|J3
     J5 --> J3
     J7 --> J3
     J8 --> J9([FIN])
