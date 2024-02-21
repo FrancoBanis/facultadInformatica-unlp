@@ -14,7 +14,7 @@ type
 		tipo_publicacion : rango_tipo;
 	end;
 	
-	array_tipo = array[	rango_tipo	] of integer;
+	array_tipo = array[rango_tiport] of integer;
 	
 	li = ^nodo;
 	nodo = record
