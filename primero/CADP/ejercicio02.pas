@@ -13,7 +13,7 @@ type
     cliente = record
       cliCod : integer;
       cliDNI : integer;
-      cliNom : string[20];
+      cliNom : integer; //string[20]
       cliPol : rangoPoliza;
       cliMon : real;
     end;
@@ -31,7 +31,8 @@ var
 begin
     for i:= 1 to ULTPOL do begin
         writeln('Ingresar precio adicional.');
-        readln(v[i]);
+        v[i] := Random(5000)+230;//readln(v[i]);
+        writeln(v[i]);
     end;
 end;
 
@@ -42,22 +43,22 @@ begin
     writeln('Ingresar DNI de cliente.');
     c.cliDNI := Random(5000)+1;
     writeln(c.cliDNI);
-    writeln('Ingresar nombre de cliente.');
-    readln(c.cliNom);
+    //writeln('Ingresar nombre de cliente.');
+    c.cliNom := Random(200)+200;//readln(c.cliNom);
     writeln('Ingresar poliza(1..12)');
-    c.cliPol := Random(0)+12;
+    c.cliPol := Random(12)+1;
     writeln(c.cliPol);
     writeln('Ingresar monto.');
     c.cliMon := Random(1200)+4241;
     writeln(c.cliMon);
 end;
-procedure almacenarDatosEnLista (var ult : li;var l:li ; c : cliente);
+procedure almacenarDatosEnLista (var ult : li; var l:li ; c : cliente);
 var
     act : li;
 begin
     new(act);
     act^.dato := c;
-    act := nil;
+    act^.sig := nil;
     if (l = nil) then
         l:= act
     else
@@ -73,6 +74,22 @@ begin
         almacenarDatosEnLista(ult,l,c)
     until (c.clicod = CORTE);
 end;
-// Programa principal
+
+procedure puntoA (l : li ; v : arrayPoliza );
 begin
+    while (l <> nil) do begin
+        writeln('DNI: ', l^.dato.cliDNI , ' nombre: ' , l^.dato.cliNom , ' monto total a abonar:', l^.dato.cliMon*v[l^.dato.cliPol] );
+        l := l^.sig;
+    end;
+end;
+// Programa principal
+var
+    lista,ult : li;
+    vectorPoliza : arrayPoliza;
+begin
+    lista:= nil;
+    ult := nil;
+    cargaPolizas(vectorPoliza);
+    carga(ult,lista);
+    puntoA(lista,vectorPoliza);
 end.
