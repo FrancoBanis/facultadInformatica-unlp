@@ -75,9 +75,27 @@ begin
     until (c.clicod = CORTE);
 end;
 
+function puntoB (n : integer): boolean;
+var
+    dig,cont : integer;
+begin
+    cont := 0;
+    while (n <> 0 ) and (cont < 2) do begin
+        dig := n DIV 10;
+        if (dig = 9) then
+            cont := cont +1;
+        n := n DIV 10 ;
+    if (cont = 2) then
+        puntoB := true
+    else
+        puntoB := false;
+    end;
+end;
 procedure puntoA (l : li ; v : arrayPoliza );
 begin
     while (l <> nil) do begin
+        if (puntoB(l^.dato.cliDNI) = true) then
+            writeln('Nombre de la persona a la cual su DNI supera 2 veces: ', l^.dato.cliNom);
         writeln('DNI: ', l^.dato.cliDNI , ' nombre: ' , l^.dato.cliNom , ' monto total a abonar:', l^.dato.cliMon*v[l^.dato.cliPol] );
         l := l^.sig;
     end;
