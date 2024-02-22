@@ -27,15 +27,15 @@ type
 
 procedure cargaPolizas(var v: arrayPoliza );
 var
-    i:rangoPoliza
+    i:rangoPoliza;
 begin
     for i:= 1 to ULTPOL do begin
-        writeln("Ingresar precio adicional.")
+        writeln('Ingresar precio adicional.');
         readln(v[i]);
     end;
 end;
 
-procedure cargaCliente (var c:cli);
+procedure cargaCliente (var c:cliente);
 begin
     writeln('Ingresar codigo de cliente.');
     readln(c.cliCod);
@@ -51,7 +51,7 @@ begin
     c.cliMon := Random(1200)+4241;
     writeln(c.cliMon);
 end;
-procedure almacenarDatosEnLista (var ult : li;var l:li ; c : cli);
+procedure almacenarDatosEnLista (var ult : li;var l:li ; c : cliente);
 var
     act : li;
 begin
@@ -66,7 +66,7 @@ begin
 end;
 procedure carga (Var ult: li ; var l:li);
 var
-    c: cli;
+    c: cliente;
 begin
     repeat
         cargaCliente(c);
