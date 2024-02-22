@@ -46,7 +46,7 @@
         J4 -.->|Si| J5[Remplazo max por VectorPos]
         J4-.->|No| J6{VectorPos > max2}
         J6-.->|Si| J7[Remplazo max2 por VectorPos]
-        J7 -.->|No| J10{¿Termine de recorrer?}
+        J6 -.->|No| J10{¿Termine de recorrer?}
         J10 -.->|Si|J8[\Informo max1 y max2/]
         J10 -.->|No|J3
         J5 --> J3
