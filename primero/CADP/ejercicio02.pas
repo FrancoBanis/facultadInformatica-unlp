@@ -44,7 +44,7 @@ begin
     c.cliDNI := Random(5000)+1;
     writeln(c.cliDNI);
     //writeln('Ingresar nombre de cliente.');
-    c.cliNom := Random(200)+200;//readln(c.cliNom);
+    c.cliNom := Random(200)+200;//Esto es un read de string. Se lo volvio integer para poder compilar y ejecutar mas rapido. readln(c.cliNom);
     writeln('Ingresar poliza(1..12)');
     c.cliPol := Random(12)+1;
     writeln(c.cliPol);
