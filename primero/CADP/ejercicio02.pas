@@ -52,20 +52,20 @@ begin
     c.cliMon := Random(1200)+4241;
     writeln(c.cliMon);
 end;
-procedure almacenarDatosEnLista (var ult : li; var l:li ; c : cliente);
+procedure almacenarDatosEnLista (var ult : li ; var l:li ; c : cliente);
 var
-    act : li;
+    nuevo : li;
 begin
-    new(act);
-    act^.dato := c;
-    act^.sig := nil;
+    new(nuevo);
+    nuevo^.dato := c;
+    nuevo^.sig := NIL;
     if (l = nil) then
-        l:= act
+        l := nuevo
     else
-        act^.sig := ult;
-    ult := act;
+        nuevo^.sig := ult;
+    ult := nuevo;
 end;
-procedure carga (Var ult: li ; var l:li);
+procedure carga (var l:li ; var ult: li);
 var
     c: cliente;
 begin
@@ -80,18 +80,39 @@ var
     dig,cont : integer;
 begin
     cont := 0;
-    while (n <> 0 ) and (cont < 2) do begin
-        dig := n DIV 10;
-        if (dig = 9) then
+    while (n <> 0 ) and (cont <> 2) do begin
+        dig := n MOD 10;
+        if (dig MOD 9 = 0) then
             cont := cont +1;
         n := n DIV 10 ;
-    if (cont = 2) then
-        puntoB := true
-    else
-        puntoB := false;
+    end;
+    puntoB := (cont = 2);
+end;
+procedure puntoC (l : li);
+var
+    act , ant : li;
+    codABuscar : integer;
+begin
+writeln('Ingresar codigo a buscar'); readln(codABuscar);
+act := l;
+ant := l;
+while (act <> nil) and (codABuscar <> act^.dato.cliCod) do begin
+    ant := act;
+    act := act^.sig;
+end;
+if (act <> nil) then
+    if (l = act) then begin
+        l := l^.sig;
+        dispose(act);
+    end
+    else begin
+        ant^.sig := act^.sig;
+        dispose(act);
     end;
 end;
 procedure puntoA (l : li ; v : arrayPoliza );
+var
+    codigoABuscar : integer;
 begin
     while (l <> nil) do begin
         if (puntoB(l^.dato.cliDNI) = true) then
@@ -102,12 +123,13 @@ begin
 end;
 // Programa principal
 var
-    lista,ult : li;
+    lista,ult: li;
     vectorPoliza : arrayPoliza;
 begin
     lista:= nil;
     ult := nil;
     cargaPolizas(vectorPoliza);
-    carga(ult,lista);
-    puntoA(lista,vectorPoliza);
+    carga(lista,ult);
+    puntoA(ult,vectorPoliza);
+    puntoC(ult);
 end.
