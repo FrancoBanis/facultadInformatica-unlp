@@ -18,11 +18,11 @@ type
 
 procedure leerViaje (var v: viaje);
 begin
-    writeln('Ingresar codigo de viaje.');
-    readln(v.cod);
-    if (v.cod <> CORTE) then begin
-        writeln('Ingresar numero de viaje.'); v.num := Random(5000);
-        writeln(v.num);
+    writeln('Ingresar numero de viaje.');
+    readln(v.num);
+    if (v.num <> CORTE) then begin
+        writeln('Ingresar codigo de viaje.'); v.cod := Random(5000);
+        writeln(v.cod);
         writeln('Ingresar direccion.'); v.dir := Random(400)+20;
         writeln(v.dir);
         writeln('Ingresar kilometros recorridos.'); v.km := Random(200)+1;
@@ -36,8 +36,8 @@ var
 begin
     new(nue);
     nue^.dato := v;
-    act := l
-    while ( act <> nil ) and ( v.codigo < act^.dato.codigo) do begin
+    act := l;
+    while ( act <> nil ) and ( v.cod < act^.dato.cod) do begin
         ant := act;
         act := act^.sig;
     end;
@@ -48,3 +48,73 @@ begin
     nue^.sig := act ;
 end;
 
+procedure cargarViajes (var l : li);
+var
+    viaAct : viaje;
+    codAct : integer;
+begin
+    codAct := 0;
+    leerViaje(viaAct);
+    while ( viaAct.num <> CORTE ) do begin
+        viaAct.cod := codAct;
+        while (viaAct.num <> CORTE) and (viaAct.cod = codAct) do begin
+            insertarOrdenado(l,viaAct);
+            leerViaje(viaAct);
+        end;
+    end;
+end;
+
+procedure kmMax (l : li);
+var
+    codM,codMD,kmM,kmMD : integer;
+begin
+    codM:=-1;codMD := codM;kmM := codMD;kmMD := kmM;
+    while (l <> nil) do begin
+        if (l^.dato.km > kmM) then begin
+            kmM := l^.dato.km; codM := l^.dato.cod;
+            kmMD := kmM;
+            codMD := codM;
+        end
+        else
+            if (l^.dato.km > kmMD) then begin
+                kmMD := l^.dato.km; codMD:= l^.dato.cod;
+            end;
+        l:= l^.sig;
+    end;
+    writeln('Los dos codigos con mayor kilometraje son:', kmMD , ' ', kmM);
+end;
+
+procedure insertarOrdenadoLD (var l : li; v : viaje);
+var
+    ant,act,nue: li;
+begin
+    new(nue);
+    nue^.dato := v;
+    act := l;
+    while (act <> nil) and (l^.dato.num > v.num ) do begin
+        ant := act;
+        act := act^.sig;
+    end;
+    if (act = l) then
+        l := nue
+    else
+        ant^.sig := nue;
+    nue^.sig := act;
+end;
+procedure listaNueva (var lD : li ; l:li);
+begin
+    while ( l <> nil) do begin
+        if (l^.dato.km > 5) then 
+            insertarOrdenadoLD(lD,l^.dato);
+        l:= l^.sig;
+    end;
+end;
+// Programa principal
+var
+    lista,listaDos : li;
+begin
+    lista := nil; listaDos := nil;
+    cargarViajes(lista);
+    listaNueva(listaDos,lista);
+    kmMax(listaDos);
+end.
