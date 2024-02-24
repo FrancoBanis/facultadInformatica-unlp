@@ -41,7 +41,7 @@ begin
         ant := act;
         act := act^.sig;
     end;
-    if (act = l) then
+    if (l = act) then
         l := nue
     else
         ant^.sig := nue;
@@ -53,7 +53,6 @@ var
     viaAct : viaje;
     codAct : integer;
 begin
-    codAct := 0;
     leerViaje(viaAct);
     while ( viaAct.num <> CORTE ) do begin
         viaAct.cod := codAct;
@@ -68,22 +67,26 @@ procedure kmMax (l : li);
 var
     codM,codMD,kmM,kmMD : integer;
 begin
-    codM:=-1;codMD := codM;kmM := codMD;kmMD := kmM;
+    codM:=-1;
+    codMD := -1;
+    kmM := -1;
+    kmMD := -1;
     while (l <> nil) do begin
         if (l^.dato.km > kmM) then begin
-            kmM := l^.dato.km; codM := l^.dato.cod;
+            kmM := l^.dato.km; 
+            codM := l^.dato.cod;
             kmMD := kmM;
             codMD := codM;
         end
         else
-            if (l^.dato.km > kmMD) then begin
-                kmMD := l^.dato.km; codMD:= l^.dato.cod;
+            if (kmM > kmMD) then begin
+                kmMD := l^.dato.km; 
+                codMD:= l^.dato.cod;
             end;
         l:= l^.sig;
     end;
-    writeln('Los dos codigos con mayor kilometraje son:', kmMD , ' ', kmM);
+    writeln('Los dos codigos con mayor kilometraje son:', codMD , ' ', codM);
 end;
-
 procedure insertarOrdenadoLD (var l : li; v : viaje);
 var
     ant,act,nue: li;
@@ -95,7 +98,7 @@ begin
         ant := act;
         act := act^.sig;
     end;
-    if (act = l) then
+    if (l = act) then
         l := nue
     else
         ant^.sig := nue;
@@ -104,9 +107,16 @@ end;
 procedure listaNueva (var lD : li ; l:li);
 begin
     while ( l <> nil) do begin
-        if (l^.dato.km > 5) then 
+        if (l^.dato.km > COND) then 
             insertarOrdenadoLD(lD,l^.dato);
         l:= l^.sig;
+    end;
+end;
+procedure imprimir(l : li);
+begin
+    while (l <> nil) do begin
+        writeln('Auto :',l^.dato.cod);
+        l := l^.sig;
     end;
 end;
 // Programa principal
@@ -115,6 +125,10 @@ var
 begin
     lista := nil; listaDos := nil;
     cargarViajes(lista);
+    writeln('Lista uno: ');
+    imprimir(lista);
     listaNueva(listaDos,lista);
+    writeln('Lista dos: ');
+    imprimir(listaDos);
     kmMax(listaDos);
 end.
