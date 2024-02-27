@@ -25,8 +25,8 @@ begin
   writeln('Ingresar peso de la semana');
   readln(varPeso);
   while (varPeso <> CONDCORTE) do begin
-    v[diml] := varPeso;
     diml := diml+1;
+    v[diml] := varPeso;
     writeln('Ingresar peso de la semana');
     readln(varPeso);
   end;
@@ -36,18 +36,17 @@ begin
     writeln('Ingresar nombre de paciente');
     readln(p.nomAp);
     if (p.nomAp <> 'zzz') then begin
-        p.diml:= 1;
+        p.diml:= 0;
         leerPesoSemanal(p.semanas,p.diml);
     end;
 end;
 function aumentoTotal (v : vSemanas; diml:integer): integer;
 var
-    i,cont: integer;
+    i: integer;
 begin
-    cont:= 0;
-    for i:= 1 to diml do 
-        cont := cont + v[i];
-    aumentoTotal := cont;
+    aumentoTotal:= 0;
+    for i:= 1 to diml do
+        aumentoTotal := v[i] + aumentoTotal;
 end;
 procedure mayorAumento (v : vSemanas; diml: integer);
 var
@@ -68,8 +67,8 @@ var
 begin
     leerPaciente(reg);
     while (reg.nomAp <> 'zzz') do begin
+        writeln('El peso total es: ',aumentoTotal(reg.semanas,reg.diml));
         mayorAumento(reg.semanas,reg.diml);
-        writeln('El aumento total del peso es: ',aumentoTotal(reg.semanas,reg.diml));
         leerPaciente(reg);
     end;
 end;
