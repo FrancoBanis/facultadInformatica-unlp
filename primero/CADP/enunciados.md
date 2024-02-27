@@ -30,3 +30,10 @@ de auto y para un mismo código de auto pueden existir 1 o más viajes. Se pide:
 a. Informar los dos códigos de auto que más kilómetros recorrieron.
 b. Generar una lista nueva con los viajes de más de 5 kilómetros recorridos, ordenada por número
 de viaje.
+
+ejercicio04.pas
+4. Una maternidad dispone información sobre sus pacientes. De cada una se conoce: nombre, apellido y
+peso registrado el primer día de cada semana de embarazo (a lo sumo 42). La maternidad necesita un
+programa que analice esta información, determine e informe:
+a. Para cada embarazada, la semana con mayor aumento de peso.
+b. El aumento de peso total de cada embarazada durante el embarazo.
