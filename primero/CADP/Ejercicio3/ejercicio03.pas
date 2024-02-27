@@ -53,9 +53,10 @@ var
     viaAct : viaje;
     codAct : integer;
 begin
+	codAct := 0;
     leerViaje(viaAct);
     while ( viaAct.num <> CORTE ) do begin
-        viaAct.cod := codAct;
+        codAct := viaAct.cod;
         while (viaAct.num <> CORTE) and (viaAct.cod = codAct) do begin
             insertarOrdenado(l,viaAct);
             leerViaje(viaAct);
@@ -73,10 +74,10 @@ begin
     kmMD := -1;
     while (l <> nil) do begin
         if (l^.dato.km > kmM) then begin
-            kmM := l^.dato.km; 
-            codM := l^.dato.cod;
             kmMD := kmM;
             codMD := codM;
+            kmM := l^.dato.km; 
+            codM := l^.dato.cod;
         end
         else
             if (kmM > kmMD) then begin
@@ -115,7 +116,7 @@ end;
 procedure imprimir(l : li);
 begin
     while (l <> nil) do begin
-        writeln('Auto :',l^.dato.cod);
+        writeln('Auto :',l^.dato.dir);
         l := l^.sig;
     end;
 end;
