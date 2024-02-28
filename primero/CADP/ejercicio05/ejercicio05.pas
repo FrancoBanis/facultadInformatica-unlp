@@ -43,7 +43,7 @@ begin
   writeln(c.capCar:2:2);
 end;
 
-procedure cargarFlota (var v : vFlot);
+procedure cargarFlota (var v : vFlot); // La flota se dispone , se carga nada mas para poder compilar y ejecutar.
 var
     i :rangoFlota; cam: camion;
 begin
