@@ -119,11 +119,12 @@ end;
 function promedioNotas ( v : arrayMate):real;
 var
     i : rangoV;
-    sum : integer
+    sum : integer;
 begin
+    sum := 0;
     for i:=1 to ULTMAT do
-        sum := v[i] + sum;
-    promedioNotas := sum/ULTMAT;
+        sum := sum + v[i] ;
+    promedioNotas := sum / ULTMAT;
 end;
 function descomponer ( num : integer): boolean;
 var
@@ -148,7 +149,7 @@ begin
     apeMaxD := ''; apeMax:= apeMaxD; 
     cB := 0; tiempoEg:= cB;
     while( l <> nil ) do begin
-        writeln('Promedio de notas: ', promedioNotas(l^.d.listMat));
+        writeln('Promedio de notas: ', promedioNotas(l^.d.listMat):2:2);
         if (l^.d.anIn = COND) and (descomponer(l^.d.num) = true) then
             cB := cB +1;
         tiempoEg := l^.d.anEg - l^.d.anIn;
@@ -164,13 +165,34 @@ begin
         end;
         l:= l^.s;
     end;
+    writeln('Nombres maximos: ', apeMax);
+    writeln('Nombres maximos:', apeMaxD);
 end;
-procedure eliminarNodo (var l :li ; numBus : integer)
+procedure eliminarNodo (var l :li ; numBus : integer);
+var
+    sig,ant : li;
+begin
+    sig := l;
+    while ( sig <> nil ) and (sig^.d.num <> numBus) do begin
+        ant := sig;
+        sig := sig^.s ;
+    end;
+    if (sig = l) then
+        if (sig = l) then begin
+            l := l^.s;
+            dispose(sig);
+        end
+        else begin
+          ant^.s := sig^.s;
+          dispose(sig);
+        end;
+end;
 //Programa principal
 var
     liAl,ultLi : li;
 begin
     liAl := nil; ultLi := nil;
     cargarLista(liAl,ultLi);
-    informar(liAl);
+    recorrerLi(liAl);
+    eliminarNodo(liAl,504);
 end.
