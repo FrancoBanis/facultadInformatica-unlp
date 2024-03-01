@@ -36,10 +36,10 @@ begin
     nue^.d := a;
     nue^.s := nil;
     if (l = nil) then
-        l = nue
+        l := nue
     else
         ult^.s :=  nue;
-    ult = nue;
+    ult := nue;
 end;
 procedure insercion (var v : arrayMate);
 var
@@ -47,6 +47,7 @@ var
 begin
     for i:= 2 to ULTMAT do begin
         j := i-1;
+        actual := v[i];
         while (j>0) and (v[j] > actual) do begin
             v[j+1] := v[j];
             j := j-1
@@ -60,11 +61,19 @@ var
     nota : integer;
 begin
     for i:= 1 to ULTMAT do begin
-        writeln('Ingresar nota: '); nota := Random(10)+4;
-        if (nota > 4 ) then 
-            v[i] := nota
+        write('Ingresar nota: '); nota := Random(10)+6; //readln(nota);
+        if (nota >= 6 ) then begin
+            v[i] := nota;
+            writeln(v[i]);
+        end
         else
             writeln('No se ingresan aplazos.');
+            while (nota < 6) do begin
+                write('Ingresar nota: '); 
+                readln(nota);
+                writeln('Ingresar nota superior a 6');
+            end;
+            v[i] := nota;
     end;
 end;
 procedure leerAlumno(var a :alumno);
@@ -74,8 +83,9 @@ begin
         write('Ingresar nombre y apellido del alumno: '); readln(a.apeNom);
         write('Ingresar email del alumno: '); readln(a.email);
         write('Ingresar an..Ingreso: '); a.anIn := Random(6)+2000;
-        writeln(a.anIng);
+        writeln(a.anIn);
         write('Ingresar an..Egreso: '); a.anEg := Random(9)+2000;
+        writeln(a.anEg);
         inVector(a.listMat);
         leerMateria(a.listMat);
     end;
@@ -106,6 +116,56 @@ begin
         l:= l^.s;
     end;
 end;
+function promedioNotas ( v : arrayMate):real;
+var
+    i : rangoV;
+    sum : integer
+begin
+    for i:=1 to ULTMAT do
+        sum := v[i] + sum;
+    promedioNotas := sum/ULTMAT;
+end;
+function descomponer ( num : integer): boolean;
+var
+    dig : integer;
+begin
+    while( num <> 0 ) and (descomponer = false) do begin
+        dig := num MOD 10;
+        if (dig MOD 2 = 1) then
+            descomponer := true
+        else
+            descomponer := false;
+        num:= num DIV 10;
+    end;
+end;
+procedure recorrerLi ( l : li);
+var
+    cB : integer;
+    apeMax , apeMaxD : string;
+    max , maxD , tiempoEg: integer;
+begin
+    max := -1; maxD := max;
+    apeMaxD := ''; apeMax:= apeMaxD; 
+    cB := 0; tiempoEg:= cB;
+    while( l <> nil ) do begin
+        writeln('Promedio de notas: ', promedioNotas(l^.d.listMat));
+        if (l^.d.anIn = COND) and (descomponer(l^.d.num) = true) then
+            cB := cB +1;
+        tiempoEg := l^.d.anEg - l^.d.anIn;
+        if (tiempoEg > max) then begin
+            maxD := max;
+            apeMaxD := apeMax;
+            max := tiempoEg;
+            apeMax := l^.d.apeNom;
+        end
+        else if (tiempoEg > maxD) then begin
+            maxD := tiempoEg;
+            apeMaxD := l^.d.apeNom;
+        end;
+        l:= l^.s;
+    end;
+end;
+procedure eliminarNodo (var l :li ; numBus : integer)
 //Programa principal
 var
     liAl,ultLi : li;
@@ -113,4 +173,4 @@ begin
     liAl := nil; ultLi := nil;
     cargarLista(liAl,ultLi);
     informar(liAl);
-end;
+end.
