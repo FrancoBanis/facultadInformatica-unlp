@@ -7,7 +7,7 @@ const
 type
     rangoV = 1..ULTV;
 
-    //vTipo = array[rangoV] of integer;
+    vTipo = array[rangoV] of integer;
 
     objetos = record
         codOb : integer;
@@ -24,14 +24,14 @@ type
         s : li;
     end;
 
-{procedure inVector (var v : vTipo);
+procedure inVector (var v : vTipo);
 var
     i : rangoV;
 begin
   for i:=1 to ULTV do
     v[i] := 0;
 end;
-}
+
 procedure inNodo (var ult : li ;var l : li; o : objetos);
 var 
     nue : li;
@@ -72,11 +72,66 @@ begin
     end;
 end;
 
+function descomponer (num :integer): boolean;
+var
+    dig,contP,contI :integer;
+begin
+    contP := 0; contI := contP;
+    while ( num <> 0 ) do begin
+        dig := num MOD 10;
+        if (dig MOD 2 = 0) then
+            contP := contP +1
+        else
+            contI := contI +1;
+        num := num DIV 10 ;
+    end;
+    descomponer := (contP > contI);
+end;
+
+procedure informarVector (v : vTipo);
+var
+    i : integer;
+begin
+    for i:= 1 to ULTV do
+        writeln('Pos: ', i , ' cantidad: ',v[i] );
+end;
+
+
+procedure recorrerLista(l : li ;var v : vTipo);
+ var
+    max,maxD,maxCod,maxCodD, contDos : integer;
+begin
+    contDos := 0;
+    max := -1; maxD := max ; maxCod := maxD ; maxCodD:= maxCod;
+    while (l <> nil) do begin
+        v[l^.d.catOb] := v[l^.d.catOb] +1;
+        if ((l^.d.nomD = CONDD) and (l^.d.anDes = CONDU)) then
+            contDos := contDos +1;
+        if (descomponer(l^.d.codOb) = true) then
+            writeln('Nombre : ', l^.d.nomD);
+        if (l^.d.dist > max) then begin
+            maxD := max;
+            maxCodD:= maxCod;
+            max := l^.d.dist;
+            maxCod := l^.d.codOb;
+        end
+        else if (maxD < l^.d.dist) then begin
+            maxD := l^.d.dist;
+            maxCodD := l^.d.codOb
+        end;
+        l:= l^.s;
+    end;
+    writeln('Objetos que cumplen la condicion del punto dos: ',contDos);
+    informarVector(v);
+end;
 // Programa principal
 var
     lista,ult : li;
+    cat : vTipo;
 begin
     lista := nil;
     ult := nil;
+    inVector(cat);
     carLista(lista,ult);
+    recorrerLista(lista,cat);
 end.
