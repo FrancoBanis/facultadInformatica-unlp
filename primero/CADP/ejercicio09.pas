@@ -24,7 +24,7 @@ type
         d: pelicula;
         s : liPe;
     end;
-
+    vGen = array[rangoGen] of real;
 procedure leerPel ( var p : pelicula);
 begin
     writeln('--------------------------');
@@ -53,6 +53,7 @@ procedure buscarCambiar(p : real; l :liPe; codBus : integer);
 var
     encontre : boolean;
 begin
+    encontre:= false;
     while (l <> nil) and (encontre <> true) do begin
         if (l^.d.cod = codBus ) then
             encontre := true;
@@ -76,9 +77,58 @@ begin
             cont := cont +1;
             leerCri(c);
         end;
-        prom := cont / su);
-    end;om,l,c.codPel);
+        prom := cont / sum;
+        buscarCambiar(prom,l,c.codPel);
         leerCri(c);
+    end;
+
+    end;
+function descomponer (n : integer): boolean;
+var
+    par, impar , dig : integer;
+begin
+    par := 0; impar := par;
+    while (n <> 0) do begin
+        dig := n MOD 10;
+        if (dig MOD 2 = 0) then 
+            par := par+1
+        else
+            impar:= impar+1;
+        n := n DIV 10;
+    end;
+    descomponer := (par = impar);
+end;
+procedure eliminarNodo(var l:liPe; numBus : integer);
+var
+    sig,ant : liPe;
+begin
+    sig:=l;
+    while ( sig <> nil) and (sig^.d.cod ) do begin
+        ant := sig;
+        sig := sig^.s;
+    end;
+    if (sig = l) then begin
+        if (sig = l) then begin
+            l:= l^.s;
+            dispose(sig);
+        end
+        else begin
+            ant^.s := sig^.s;
+            dispose(sig);
+        end;
+end;
+procedure mayorPuntaje (v : vGen);
+var
+    i ,codMax: integer;
+    maxPun : real;
+begin
+    maxPun := -1; codMax:= maxPun;
+    for i:= 1 to ULT do begin
+        if (v[i] > maxPun ) then begin
+            maxPun := v[i];
+            codMax:= i;
+        end;
+    writeln('Mayor puntaje de genero : ', codMax);
     end;
 end;
 procedure inNodoPe(var ult : liPe ; var l : liPe ; p:pelicula);
