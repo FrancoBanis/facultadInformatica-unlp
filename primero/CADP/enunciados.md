@@ -104,5 +104,4 @@ estar ordenada por número de cuenta origen.
 Una vez generada la estructura del inciso a), utilizar dicha estructura para:
 b) Calcular e informar para cada cuenta de origen el monto total transferido a terceros.
 c) Calcular e informar cuál es el código de motivo que más transferencias a terceros tuvo.
-d) Calcular e informar la cantidad de transferencias a terceros realizadas en el mes de Junio en las
-cuales el número de cuenta destino posea menos dígitos pares que impares.
+d) Calcular e informar la cantidad de transferencias a terceros realizadas en el mes de Junio en las cuales el número de cuenta destino posea menos dígitos pares que impares.
