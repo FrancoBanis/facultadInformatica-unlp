@@ -20,7 +20,7 @@ type
         d: transferencia;
         s : li;
     end;
-    vMotiv = array[rangoCod] of integer;
+   // vMotiv = array[rangoCod] of integer;
 
 procedure leerTrans ( var t : transferencia);
 begin
