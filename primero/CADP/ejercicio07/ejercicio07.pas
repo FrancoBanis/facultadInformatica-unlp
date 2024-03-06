@@ -177,7 +177,7 @@ begin
         ant := sig;
         sig := sig^.s ;
     end;
-    if (sig = l) then
+    if (sig <> l) then
         if (sig = l) then begin
             l := l^.s;
             dispose(sig);

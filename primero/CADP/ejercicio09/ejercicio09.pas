@@ -24,7 +24,14 @@ type
         d: pelicula;
         s : liPe;
     end;
-    vGen = array[rangoGen] of real;
+  vGen = array[rangoGen] of real;
+procedure inVector (var v: vGen);
+var
+    i : rangoGen;
+begin
+    for i:= 1 to ULT do
+        v[i] := 0;
+end;
 procedure leerPel ( var p : pelicula);
 begin
     writeln('--------------------------');
@@ -62,27 +69,6 @@ begin
     if (encontre = true) then
          l^.d.punProm := p;
 end;
-procedure actualizarLi (  l : liPe );
-var
-    c: criticas;
-    criAct,cont : integer;
-    prom,sum : real;
-begin
-    leerCri(c);
-    while (c.codPel <> CORTE) do begin
-        criAct := c.codPel;
-        cont := 0; sum := cont; prom := sum;
-        while (c.codPel <> CORTE) and (criAct = c.CodPel) do begin
-            sum := sum + c.puntaje;
-            cont := cont +1;
-            leerCri(c);
-        end;
-        prom := cont / sum;
-        buscarCambiar(prom,l,c.codPel);
-        leerCri(c);
-    end;
-
-    end;
 function descomponer (n : integer): boolean;
 var
     par, impar , dig : integer;
@@ -96,25 +82,48 @@ begin
             impar:= impar+1;
         n := n DIV 10;
     end;
-    descomponer := (par = impar);
+    descomponer := par = impar;
 end;
+procedure actualizarLi (  l : liPe );
+var
+    c: criticas;
+    criAct,cont : integer;
+    prom,sum : real;
+begin
+    leerCri(c);
+    while (c.codPel <> CORTE) do begin
+        criAct := c.codPel;
+        cont := 0; sum := cont; prom := sum;
+        while (c.codPel <> CORTE) and (criAct = c.CodPel) do begin
+            sum := sum + c.puntaje;
+            cont := cont +1;
+            if (descomponer(c.DNI) = true) then 
+                writeln('Nombre con DNI par = impar:', c.apNom);
+            leerCri(c);
+        end;
+        prom := cont / sum;
+        buscarCambiar(prom,l,c.codPel);
+        leerCri(c);
+    end;
+end;
+
 procedure eliminarNodo(var l:liPe; numBus : integer);
 var
-    sig,ant : liPe;
+    act,ant : liPe;
 begin
-    sig:=l;
-    while ( sig <> nil) and (sig^.d.cod ) do begin
-        ant := sig;
-        sig := sig^.s;
+    act:=l;
+    while ( act <> nil) and (act^.d.cod <> numBus ) do begin
+        ant := act;
+        act := act^.s;
     end;
-    if (sig = l) then begin
-        if (sig = l) then begin
+    if (act  <> nil) then 
+        if (act = l) then begin
             l:= l^.s;
-            dispose(sig);
+            dispose(act);
         end
         else begin
-            ant^.s := sig^.s;
-            dispose(sig);
+            ant^.s := act^.s;
+            dispose(act);
         end;
 end;
 procedure mayorPuntaje (v : vGen);
@@ -122,14 +131,14 @@ var
     i ,codMax: integer;
     maxPun : real;
 begin
-    maxPun := -1; codMax:= maxPun;
+    maxPun := -1; codMax:= -1;
     for i:= 1 to ULT do begin
         if (v[i] > maxPun ) then begin
             maxPun := v[i];
             codMax:= i;
         end;
-    writeln('Mayor puntaje de genero : ', codMax);
     end;
+    writeln('Mayor puntaje de genero : ', codMax);
 end;
 procedure inNodoPe(var ult : liPe ; var l : liPe ; p:pelicula);
 var
@@ -154,13 +163,24 @@ begin
         inNodoPe(ult,l,pelAct);
     end;
 end;
-
+procedure recorrerLista (l : liPe;v : vGen);
+begin
+    while (l <> nil) do begin
+        v[l^.d.codGen] := v[l^.d.codGen] + l^.d.punProm;
+        l := l^.s;
+    end;
+    mayorPuntaje(v);
+    eliminarNodo(l,506);
+end;
 //
 var
     l,lUlt : liPe;
+    vectorGeneros : vGen;
 begin
+    inVector(vectorGeneros);
     l:= nil; 
     lUlt := nil;
     generarLista(lUlt,l);
     actualizarLi(l);
+    recorrerLista(l,vectorGeneros);
 end.
