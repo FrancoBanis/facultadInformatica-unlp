@@ -58,17 +58,11 @@ begin
 end;
 procedure puntoI (e : empleado ;apBus : string; nomBus: string  );
 begin
-    if (e.nom = nomBus)  then begin
+    if (e.nom = nomBus) or (e.apell = apBus) then begin
         writeln('El : ');
         informar(e); 
         writeln(' cumple la condicion de I.');
-    end
-    else
-        if (e.apell = apBus ) then begin
-            writeln('El : ');
-            informar(e); 
-            writeln(' cumple la condicion de I.');
-        end;
+    end;
 end;
 procedure puntoIII (e : empleado );
 begin
@@ -78,32 +72,31 @@ begin
         writeln(' esta proximo a jubilarse.');
     end;
 end;
-procedure Listar (var a : archEmp; ult: integer);
+// Otra manera de hacerlo :
+procedure Listar (var a : archEmp);
 var
     i: integer;
     regLeido : empleado;
 begin
-    for i:= 0 to ult-1 do begin
-        Seek(a,i);
+    Seek(a,0);
+    while not EoF(a) do begin
         read(a,regLeido);
         puntoI(regLeido,'Banis','Franco');
         puntoIII(regLeido);
         informar(regLeido);
     end;
 end;
-
-// Otra manera de hacerlo :
 procedure ListarAlter(var a : archEmp; ult:integer);
 var
     i,j : integer;
     regLeido : empleado;
 begin
     for j := 1 to 3 do begin
+        Seek(a,0);
         writeln('---------------');
         if (j = 1 ) then begin
             writeln('Empleados a buscar:');
-            for i:=0 to ult-1 do begin
-                Seek(a,i);
+            while not EoF(a) do begin
                 read(a,regLeido); 
                 puntoI(regLeido,'Banis','Franco')
             end;
@@ -112,8 +105,7 @@ begin
         else begin
             if (j = 2) then begin
                 writeln('Empleados proximos a jubilarse: ');
-                for i:=0 to ult-1 do begin
-                    Seek(a,i);
+                while not EoF(a) do begin
                     read(a,regLeido);
                     puntoIII(regLeido);
                 end;
@@ -121,11 +113,10 @@ begin
             end 
             else begin
                     writeln('Lectura de empleados: ');
-                    for i:=0 to ult-1 do begin
-                    Seek(a,i);
-                    read(a,regLeido);
-                    informar(regLeido);
-                end;
+                    while not EoF(a) do begin
+                        read(a,regLeido);
+                        informar(regLeido);
+                    end;
             end;
         end;
  end;
@@ -138,8 +129,6 @@ var
 begin
     generarArchivo(archivoAct,nombreArchivo);
     insertarRegistro(archivoAct);
-    up := filepos(archivoAct);
-    //  Listar(archivoAct,up);
     ListarAlter(archivoAct,up);
     Close(archivoAct);
 end.
