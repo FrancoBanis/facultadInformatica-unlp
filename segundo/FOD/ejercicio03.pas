@@ -72,20 +72,6 @@ begin
         writeln(' esta proximo a jubilarse.');
     end;
 end;
-// Otra manera de hacerlo :
-procedure Listar (var a : archEmp);
-var
-    i: integer;
-    regLeido : empleado;
-begin
-    Seek(a,0);
-    while not EoF(a) do begin
-        read(a,regLeido);
-        puntoI(regLeido,'Banis','Franco');
-        puntoIII(regLeido);
-        informar(regLeido);
-    end;
-end;
 procedure ListarAlter(var a : archEmp; ult:integer);
 var
     i,j : integer;
