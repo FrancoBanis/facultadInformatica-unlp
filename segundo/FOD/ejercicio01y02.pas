@@ -1,4 +1,4 @@
-program ejercicio01;
+program ejercicio0102;
 const
     CORTE = 30000;
     CONDICION = 1500;
@@ -7,10 +7,7 @@ type
 var
     nomEl : string;
     archivoNumeros : archNum;
-    numLeido : integer;
-    i,numAct : integer;
-    total : integer;
-    contador : integer;
+    numLeido,i,numAct,total,contador : integer;
     prom : real;
 begin
   write('Ingresar nombre del archivo: ');
