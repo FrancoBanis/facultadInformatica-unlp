@@ -28,3 +28,13 @@ ii.Listar en pantalla los empleados de a uno por línea.
 iii.Listar en pantalla empleados mayores de 70 años, próximos a jubilarse.
 NOTA: El nombre del archivo a crear o utilizar debe ser proporcionado por el usuario una
 única vez.
+
+# ejercicio04.pas
+4. Agregar al menú del programa del ejercicio 3, opciones para:
+a. Añadir una o más empleados al final del archivo con sus datos ingresados por
+teclado.
+b.Modificar edad a una o más empleados.
+c.Exportar el contenido del archivo a un archivo de texto llamado “todos_empleados.txt”.
+d. Exportar a un archivo de texto llamado: “faltaDNIEmpleado.txt”, los empleados
+que no tengan cargado el DNI (DNI en 00).
+NOTA: Las búsquedas deben realizarse por número de empleado.

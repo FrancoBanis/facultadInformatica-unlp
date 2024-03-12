@@ -3,12 +3,14 @@ const
     CORTE = 'fin';
     CONDICION = 70;
 type
+    rangoString = string[20];
+    rangoOpciones = 1..5;
     empleado  = record
       num : integer;
-      apell : string[20];
+      apell : rangoString;
       edad : integer;
       DNI : integer;
-      nom : string[20];
+      nom : rangoString;
     end;
     archEmp = file of empleado;
 
@@ -72,7 +74,7 @@ begin
         writeln(' esta proximo a jubilarse.');
     end;
 end;
-procedure ListarAlter(var a : archEmp; ult:integer);
+procedure ListarAlter(var a : archEmp);
 var
     i,j : integer;
     regLeido : empleado;
@@ -98,23 +100,25 @@ begin
                 writeln('-punto iii finalizado-');
             end 
             else begin
-                    writeln('Lectura de empleados: ');
-                    while not EoF(a) do begin
-                        read(a,regLeido);
-                        informar(regLeido);
-                    end;
+                writeln('Lectura de empleados: ');
+                while not EoF(a) do begin
+                    read(a,regLeido);
+                    informar(regLeido);
+                end;
             end;
         end;
  end;
 end;
 // Programa principal
 var
-    archivoAct : archEmp;
-    nombreArchivo : string;
-    up : integer;
+    archivoAct,archivoCont,archivoFaltantes : archEmp;
+    nombreArchivo : rangoString;
 begin
     generarArchivo(archivoAct,nombreArchivo);
     insertarRegistro(archivoAct);
-    ListarAlter(archivoAct,up);
+    ListarAlter(archivoAct);
+    Assign(archivoCont,'todos_empleados.txt');
+    Assign(archivoFaltantes,'faltaDNIEmpleado.txt');
+    menu(archivoAct,archivoCont,archivoFaltantes);
     Close(archivoAct);
 end.
