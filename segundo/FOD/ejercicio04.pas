@@ -1,7 +1,16 @@
 program ejercicio04;
-const
 type
-procedure opcionesMenu();
+    rangoString = string[20];
+    rangoOpciones = 1..5;
+    empleado  = record
+      num : integer;
+      apell : rangoString;
+      edad : integer;
+      DNI : integer;
+      nom : rangoString;
+    end;
+    archEmp = file of empleado;
+    procedure opcionesMenu();
 begin
     writeln('------1)Agregar un empleado al archivo.');
     writeln('------2)Modificar edad a una o mas empleados.');
@@ -23,5 +32,11 @@ begin
     write(': ');readln(opciones);
     end;
     writeln('--------------------');
-
 end;
+
+var
+    archOriginal,archivoFaltantes,archivoCopia : archEmp;
+begin
+    Assign(archOriginal,'prueba.txt');
+    
+end.

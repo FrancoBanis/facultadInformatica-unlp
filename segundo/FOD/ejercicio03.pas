@@ -74,40 +74,70 @@ begin
         writeln(' esta proximo a jubilarse.');
     end;
 end;
-procedure ListarAlter(var a : archEmp);
+procedure opcionesDeListado();
+begin
+    writeln('------1) Listar en pantalla los datos de empleados que tengan un nombre o apellido determinado, el cual se proporciona desde el teclado.---');
+    writeln('------2) Listar en pantalla los empleados de a uno por linea.------');
+    writeln('------3) Listar en pantalla los empleados mayores de 70 anios, proximos a jubilarse.------');
+    writeln('------4) Finalizar el programa------')
+end;
+procedure buscarNomyApe (var a : archEmp);
 var
-    i,j : integer;
+    nomBus,apBus : rangoString;
     regLeido : empleado;
 begin
-    for j := 1 to 3 do begin
-        Seek(a,0);
-        writeln('---------------');
-        if (j = 1 ) then begin
-            writeln('Empleados a buscar:');
-            while not EoF(a) do begin
-                read(a,regLeido); 
-                puntoI(regLeido,'Banis','Franco')
-            end;
-            writeln('-punto i finalizado-');
-        end
-        else begin
-            if (j = 2) then begin
-                writeln('Empleados proximos a jubilarse: ');
-                while not EoF(a) do begin
-                    read(a,regLeido);
-                    puntoIII(regLeido);
-                end;
-                writeln('-punto iii finalizado-');
-            end 
-            else begin
-                writeln('Lectura de empleados: ');
-                while not EoF(a) do begin
-                    read(a,regLeido);
-                    informar(regLeido);
-                end;
-            end;
+    Seek(a,0);
+    write('Ingresar nombre a buscar: '); readln(nomBus);
+    write('Ingresar apellido a buscar: '); readln(apBus);
+    writeln('---------------');
+    while not EoF(a) do begin
+        read(a,regLeido); 
+        puntoI(regLeido,apBus,nomBus);
+    end;
+    writeln('----busqueda finalizada----');
+end;
+procedure proximosJubilarse (var a :archEmp);
+var
+    regLeido : empleado;
+begin
+    Seek(a,0);
+    writeln('Empleados proximos a jubilarse: ');
+    while not EoF(a) do begin
+        read(a,regLeido);
+        puntoIII(regLeido);
         end;
- end;
+    writeln('-punto iii finalizado-');
+end;
+procedure recorrerlistado(var a :archEmp);
+var
+    regLeido: empleado;
+begin
+    Seek(a,0);
+    writeln('Lectura de empleados: ');
+    while not EoF(a) do begin
+        read(a,regLeido);
+        informar(regLeido);
+    end;
+end;
+procedure elegirListado (var a: archEmp);
+var
+    indiceOpciones : rangoOpciones;
+begin
+    writeln('----------Menu----------');
+    writeln('--------Ingresar que hacer :--------');
+    opcionesDeListado();
+    write(': '); readln(indiceOpciones);
+    while (indiceOpciones <> 4) do begin
+        writeln('---------------------------------');
+        case indiceOpciones of
+            1:  buscarNomyApe(a);
+            2:  recorrerlistado(a); 
+            3:  proximosJubilarse(a);
+        end;
+        writeln('---------------------------------');
+        opcionesDeListado();
+        write(': '); readln(indiceOpciones);
+   end;
 end;
 // Programa principal
 var
@@ -116,9 +146,6 @@ var
 begin
     generarArchivo(archivoAct,nombreArchivo);
     insertarRegistro(archivoAct);
-    ListarAlter(archivoAct);
-    Assign(archivoCont,'todos_empleados.txt');
-    Assign(archivoFaltantes,'faltaDNIEmpleado.txt');
-    menu(archivoAct,archivoCont,archivoFaltantes);
+    elegirListado(archivoAct);
     Close(archivoAct);
 end.
