@@ -27,6 +27,11 @@ begin
     opcionesMenu();
     write(': ');readln(opciones);
     while (opciones <> 5) do begin
+    case opciones of
+    1: agregarEmpleado
+    2: modificarEdad
+    3: ExportarTxt
+    4: ExportarFaltantes
     writeln('Ingresar que hacer:');
     opcionesMenu;
     write(': ');readln(opciones);
@@ -38,5 +43,6 @@ var
     archOriginal,archivoFaltantes,archivoCopia : archEmp;
 begin
     Assign(archOriginal,'prueba.txt');
-    
+    Reset(archOriginal);
+    Assign
 end.
