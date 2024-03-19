@@ -93,7 +93,7 @@ begin
     Seek(arch,0);
     while not EOF(arch) do begin
         read(arch,empAct);
-        write(archivoCopia,' ',empAct.num,' : Apellido y nombre : ',empAct.apell, ' ',empAct.nom,' edad: ',empAct.edad,' dni: ',empAct.DNI,'. ');
+        write(archivoCopia,'| ',empAct.num,' : Apellido y nombre : ',empAct.apell, ' ',empAct.nom,' edad: ',empAct.edad,' dni: ',empAct.DNI,'. ');
     end;
     Close(archivoCopia);
 end;
